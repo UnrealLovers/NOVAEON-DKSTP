@@ -97,6 +97,17 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
 .stat-line{display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px dashed var(--line);font-size:15px}.stat-line b{color:var(--am);font-family:var(--orbit)}
 .ov-btns{display:flex;flex-direction:column;gap:10px;margin-top:20px}
 #rank-badge{font-family:var(--orbit);font-size:64px;font-weight:900;line-height:1;margin:6px 0;text-shadow:0 0 30px currentColor}
+
+/* PILOT RANK / EXP progression display */
+.pilot-progress{display:grid;grid-template-columns:minmax(130px,220px) minmax(90px,1fr) minmax(155px,240px);align-items:center;gap:12px;padding:9px 13px;margin:-8px 0 20px;border-color:rgba(65,224,255,.24);background:linear-gradient(90deg,rgba(9,18,34,.88),rgba(8,15,28,.56))}
+.pilot-rank-name{font:900 11px var(--orbit);letter-spacing:1.5px;color:var(--am);white-space:nowrap;text-shadow:0 0 10px rgba(255,193,77,.22)}
+.pilot-exp-text,.pilot-next-rank{font:700 9px var(--orbit);letter-spacing:.5px;color:var(--mut);white-space:nowrap;text-align:right}
+.pilot-exp-track{height:6px;min-width:60px;overflow:hidden;background:#070d18;border:1px solid rgba(65,224,255,.22);position:relative}
+.pilot-exp-fill{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--cy),var(--vi),var(--am));box-shadow:0 0 10px rgba(65,224,255,.3);transition:width .18s ease}
+#hud-pilot-rank{color:var(--am);border-color:rgba(255,193,77,.35)}
+@media(max-width:760px){.pilot-progress{grid-template-columns:1fr auto;gap:7px 12px;margin:0 0 12px;padding:9px 10px}.pilot-exp-track{grid-column:1/-1;grid-row:2}.pilot-exp-text{grid-column:2;grid-row:1}.pilot-next-rank{grid-column:1/-1;text-align:left;font-size:8px}}
+@media(max-width:390px){.pilot-rank-name{font-size:9px}.pilot-exp-text{font-size:8px}.pilot-progress{margin-bottom:10px}}
+
 #scr-menu{padding-bottom:24px}
 .menu-btns .btn{min-height:40px;padding:10px 22px}
 @media(max-width:640px){
@@ -128,13 +139,19 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
  .ship-dock{padding:12px}
 }
 </style>
-<!-- NOVAEON Space Shooter 1.0.4 — single-file release build; smooth enemy motion, command tools removed, game API kept private after bootstrap. -->
+<!-- NOVAEON Space Shooter 1.0.5 — single-file desktop build; pilot ranks, sector-scaled EXP, level cap 100. -->
 </head>
 <body data-mode="menu">
 <canvas id="cv"></canvas><div id="fx-scan"></div><div id="fx-vig"></div>
 <section id="scr-menu" class="screen active">
- <div class="menu-top"><span class="ver">NOVAEON // SPACE SHOOTER 1.0.3 · HARDENED BUILD</span>
+ <div class="menu-top"><span class="ver">NOVAEON // SPACE SHOOTER 1.0.5 · PILOT RANK UPDATE</span>
   <span style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip">◈ <b id="menu-cred">0</b></span><span class="chip" style="color:var(--dia)">♦ <b id="menu-dia">0</b></span><span class="chip" style="color:var(--gr)">Lv <b id="menu-lvl">1</b></span></span></div>
+ <div class="pilot-progress panel" aria-label="Progress level dan pangkat pilot">
+  <span class="pilot-rank-name" id="menu-rank-title">ROOKIE</span>
+  <div class="pilot-exp-track" role="progressbar" aria-label="EXP menuju level berikutnya" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i class="pilot-exp-fill" id="menu-exp-fill"></i></div>
+  <span class="pilot-exp-text" id="menu-exp-text">0 / 100 EXP</span>
+  <span class="pilot-next-rank" id="menu-next-rank">NEXT: CADET · LV 5</span>
+ </div>
  <div class="menu-mid">
   <div class="title-block"><div class="title-sub">// EKSPEDISI LINTAS DIMENSI //</div><h1 id="game-title">NOVAEON</h1>
    <p class="title-tag">13 Tier · 20 Pesawat Premium · 20 Dimensi · Space Garage<br/>Tembus <b>The Godhead</b> di sektor 2000.</p>
@@ -175,7 +192,7 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
  <div class="hud-tl panel" style="padding:10px 12px"><div class="blab">HULL</div><div class="bar"><i id="hp-fill"></i></div><div class="blab">AMUNISI</div><div class="bar"><i id="ammo-fill"></i></div><div id="heat-wrap"><div class="blab" style="color:var(--mg)">PANAS</div><div class="bar"><i id="heat-fill"></i></div></div><div id="scrap-wrap">⛭ <b id="scrap-num">0</b>/8</div><div id="shield-pips"></div></div>
  <div class="hud-tc"><div id="hud-stage">SEKTOR 1</div><div id="hud-dim"></div><div id="hud-mech"></div><div id="boss-wrap"><div id="boss-name"></div><div class="bar" id="boss-bar" style="position:relative"><i id="boss-fill"></i></div></div></div>
  <div class="hud-tr"><div class="val">◈ <span id="hud-cred">0</span></div><div class="val scr">SKOR <span id="hud-score">0</span></div><div id="combo">×<span id="combo-num">2</span></div></div>
- <div class="hud-bl"><span class="chip" id="hud-bomb" style="color:var(--mg)">BOM: 2</span><span class="chip" id="hud-cls" style="color:var(--cy)">WAR</span><span class="chip" id="hud-skill" style="display:none;color:var(--gr)"></span></div>
+ <div class="hud-bl"><span class="chip" id="hud-bomb" style="color:var(--mg)">BOM: 2</span><span class="chip" id="hud-cls" style="color:var(--cy)">WAR</span><span class="chip" id="hud-pilot-rank">LV 1 · ROOKIE</span><span class="chip" id="hud-pilot-exp">EXP 0 / 100</span><span class="chip" id="hud-skill" style="display:none;color:var(--gr)"></span></div>
  <div class="hud-br"><button id="bomb-btn">BOM<b id="bomb-num">2</b></button><button id="pause-btn">II</button></div>
 </div>
 <div id="toast"></div><div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
@@ -246,7 +263,7 @@ function normalizeSaveData(){
  DB.owned=Array.isArray(DB.owned)?DB.owned.filter(id=>SHIPS.some(s=>s.id===id)):[];
  DB.owned=[...new Set(DB.owned)];if(!DB.owned.includes('sparrow'))DB.owned.unshift('sparrow');
  DB.sel=SHIPS.some(s=>s.id===DB.sel)&&DB.owned.includes(DB.sel)?DB.sel:'sparrow';
- DB.credits=finiteNum(DB.credits);DB.diamond=finiteNum(DB.diamond);DB.exp=finiteNum(DB.exp);DB.lvl=Math.floor(finiteNum(DB.lvl,1,1,999999));
+ DB.credits=finiteNum(DB.credits);DB.diamond=finiteNum(DB.diamond);DB.exp=finiteNum(DB.exp);DB.lvl=Math.floor(finiteNum(DB.lvl,1,1,100));if(DB.lvl>=100)DB.exp=0;
  DB.maxStage=Math.floor(finiteNum(DB.maxStage,1,1,2000));DB.best=finiteNum(DB.best);DB.bp=Math.floor(finiteNum(DB.bp));DB.prestige=Math.floor(finiteNum(DB.prestige));
  for(const k of ['killsTotal','eliteKills','creditsTotal','maxCombo','perfectStages','rankS','nobombBoss','focusUses'])DB[k]=Math.floor(finiteNum(DB[k]));
  DB.ach=asRecord(DB.ach);DB.achAll=asRecord(DB.achAll);DB.kills=asRecord(DB.kills);DB.seen=asRecord(DB.seen);DB.ach=asRecord(DB.ach);
@@ -1015,7 +1032,55 @@ function addText(x,y,txt,col='#fff',size=12){if(DB.set&&DB.set.dmg===0&&size<14)
 function eBul(x,y,vx,vy,type='n',r=5,col=null,shape='orb'){if(G.ebul.length>320)return;G.ebul.push({x,y,vx,vy,type,r,t:0,col,ph:0,shape});}
 const mechOn=m=>G.dim.mech===m||(G.dim.mech==='chaos'&&G.chaos===m);
 function unlockAch(id){if(DB.ach[id])return;DB.ach[id]=1;DB.diamond+=2;save();const a=ACH.find(x=>x[0]===id);if(a){toast('🏆 '+a[1]);SFX.play('ach');}if(NOVA_API)NOVA_API.emit('achievement',id);}
-function gainExp(v){DB.exp+=v;const need=100*Math.pow(DB.lvl,1.3);if(DB.exp>=need){DB.exp-=need;DB.lvl++;toast('⭐ LEVEL UP → Lv '+DB.lvl);SFX.play('ach');save();}}
+const MAX_PILOT_LEVEL=100;
+const PILOT_RANKS=[
+ {min:1,max:4,name:'ROOKIE',expMult:1.00,color:'#9aa7b8'},
+ {min:5,max:9,name:'CADET',expMult:1.05,color:'#8fd05a'},
+ {min:10,max:14,name:'PILOT',expMult:1.10,color:'#4da3ff'},
+ {min:15,max:19,name:'ACE',expMult:1.15,color:'#56d9e8'},
+ {min:20,max:29,name:'VETERAN',expMult:1.20,color:'#b46bff'},
+ {min:30,max:39,name:'EXPERT',expMult:1.25,color:'#ffb43a'},
+ {min:40,max:49,name:'ELITE',expMult:1.30,color:'#ff69b4'},
+ {min:50,max:59,name:'MASTER',expMult:1.35,color:'#7cffb0'},
+ {min:60,max:69,name:'GRANDMASTER',expMult:1.40,color:'#d9d9e8'},
+ {min:70,max:79,name:'COSMIC VANGUARD',expMult:1.45,color:'#7fd4ff'},
+ {min:80,max:89,name:'ASTRAL SOVEREIGN',expMult:1.50,color:'#ffd700'},
+ {min:90,max:99,name:'STAR REGENT',expMult:1.55,color:'#e8e8e8'},
+ {min:100,max:100,name:'STAR SOVEREIGN',expMult:1.60,color:'#ffffff'}
+];
+function pilotRankInfo(level=DB.lvl){const lv=clamp(Math.floor(Number(level)||1),1,MAX_PILOT_LEVEL);return PILOT_RANKS.find(r=>lv>=r.min&&lv<=r.max)||PILOT_RANKS[0];}
+function pilotExpNeed(level=DB.lvl){const lv=clamp(Math.floor(Number(level)||1),1,MAX_PILOT_LEVEL);if(lv>=MAX_PILOT_LEVEL)return 0;return Math.ceil(100*Math.pow(lv,1.3)*pilotRankInfo(lv).expMult);}
+function pilotExpForEnemy(e){
+ const st=clamp(Math.floor(G.stage||1),1,2000),size=Math.max(1,Number(e&&e.size)||16);
+ const sizeMult=size>=105?2.5:size>=90?2.15:size>=70?1.7:size>=50?1.35:size>=35?1.15:1;
+ const colossal=(e&&e.clusterV)||COLOSSAL_TYPES.has(e&&e.type);const classMult=colossal?Math.max(1.7,sizeMult):sizeMult;
+ const eliteMult=e&&e.elite?1.65:1;
+ // Sector-scaled rewards are small in early sectors and grow toward endgame.
+ return Math.max(1,Math.round((2+st*st*.00004)*classMult*eliteMult));
+}
+function pilotBossExpReward(b){const st=clamp(Math.floor(G.stage||1),1,2000);const base=120+Math.round(st*.08);return Math.round(base*(b&&b.final?8:b&&b.absoluteGate?4:b&&b.lord?2.5:1));}
+let lastPilotHudText='',lastPilotExpText='';
+function updatePilotProgressUI(){
+ const lv=clamp(Math.floor(Number(DB.lvl)||1),1,MAX_PILOT_LEVEL),rank=pilotRankInfo(lv),need=pilotExpNeed(lv),exp=lv>=MAX_PILOT_LEVEL?0:Math.max(0,Number(DB.exp)||0),pct=need?clamp(exp/need*100,0,100):100;
+ const rankName=$('menu-rank-title'),expText=$('menu-exp-text'),fill=$('menu-exp-fill'),next=$('menu-next-rank');
+ if(rankName){rankName.textContent=rank.name;rankName.style.color=rank.color;}
+ if(expText)expText.textContent=lv>=MAX_PILOT_LEVEL?'MAX LEVEL':fmt(Math.floor(exp))+' / '+fmt(need)+' EXP';
+ if(fill){fill.style.width=pct+'%';const track=fill.parentElement;if(track)track.setAttribute('aria-valuenow',String(Math.round(pct)));}
+ if(next)next.textContent=lv>=MAX_PILOT_LEVEL?'MAXIMUM RANK REACHED':'NEXT: '+pilotRankInfo(lv+1).name+' · LV '+(lv+1);
+ const hud=$('hud-pilot-rank'),hudText='LV '+lv+' · '+rank.name;
+ if(hud&&hudText!==lastPilotHudText){hud.textContent=hudText;hud.style.color=rank.color;lastPilotHudText=hudText;}
+ const hudExp=$('hud-pilot-exp'),hudExpText=lv>=MAX_PILOT_LEVEL?'EXP MAX':('EXP '+fmt(Math.floor(exp))+' / '+fmt(need));
+ if(hudExp&&hudExpText!==lastPilotExpText){hudExp.textContent=hudExpText;hudExp.title=lv>=MAX_PILOT_LEVEL?'Level maksimum tercapai':(Math.floor(exp)+' dari '+need+' EXP untuk level berikutnya');lastPilotExpText=hudExpText;}
+}
+function gainExp(v,options={}){
+ if(DB.lvl>=MAX_PILOT_LEVEL){DB.lvl=MAX_PILOT_LEVEL;DB.exp=0;updatePilotProgressUI();return;}
+ const amount=Math.max(0,Number(v)||0);if(!amount&&!options.processExisting){updatePilotProgressUI();return;}
+ const oldLevel=DB.lvl,oldRank=pilotRankInfo(oldLevel).name;DB.exp=Math.max(0,Number(DB.exp)||0)+amount;
+ while(DB.lvl<MAX_PILOT_LEVEL){const need=pilotExpNeed(DB.lvl);if(DB.exp<need)break;DB.exp-=need;DB.lvl++;if(DB.lvl>=MAX_PILOT_LEVEL){DB.exp=0;break;}}
+ const leveled=DB.lvl>oldLevel,newRank=pilotRankInfo(DB.lvl).name;
+ if(leveled){if(player.alive)loadShip(false);if(!options.quiet){if(newRank!==oldRank){toast('✦ PROMOSI PANGKAT · '+newRank);setBanner('PANGKAT BARU',newRank,2.4);}else toast('⭐ LEVEL UP → Lv '+DB.lvl);SFX.play('ach');}save();}
+ updatePilotProgressUI();
+}
 function shipUnlocked(s){if(DB.owned.includes(s.id))return true;
  if(s.req==='ascend')return Object.values(DB.up).reduce((a,b)=>a+b,0)>=30;
  if(s.req==='prestige')return (DB.prestige||0)>=1;
@@ -1053,7 +1118,7 @@ function spawnBoss(){const st=G.stage,final=st===2000,absoluteGate=st===1500,lor
   mv:form===99?'orbit':['sway','orbit','sweep','dive'][form%4],sigatk:SIG[form]||'volley',
   name:final?'THE GODHEAD — ABSOLUTE ENTITY':absoluteGate?'THE ABSOLUTE ENTITY · GATE PHASE':(lord?G.dim.lord:G.dim.boss),pat:null,patT:0,atkT:2.2,fT:0,spA:0,phase:0,bombUsed:false};
  setBanner('⚠ ANCAMAN BESAR ⚠',G.boss.name,2.4,'danger');SFX.play('boss');}
-function stageClear(){const n=G.stage,bonus=60+Math.round(n*4);addCredit(bonus);G.score+=bonus*10;gainExp(10);setBanner('SEKTOR '+n+' AMAN','+'+fmt(bonus),1.6);G.clearT=2.2;
+function stageClear(){const n=G.stage,bonus=60+Math.round(n*4);addCredit(bonus);G.score+=bonus*10;gainExp(15+Math.floor(n*.02));setBanner('SEKTOR '+n+' AMAN','+'+fmt(bonus)+' · +'+fmt(15+Math.floor(n*.02))+' EXP',1.6);G.clearT=2.2;
  if(G.combo>DB.maxCombo)DB.maxCombo=G.combo;if(G.stageDamaged===false)DB.perfectStages=(DB.perfectStages||0)+1;save();
  if(NOVA_API)NOVA_API.emit('stageClear',{stage:n,kills:G.kills});}
 function openRoad(startStage,dimI){G.roadStage=startStage;G.dim=DIMS[dimI];G.mode='road';G.roadA=[];G.roadS=[];
@@ -1093,7 +1158,7 @@ function bestiarySeen(k){if(DB.seen[k])return;DB.seen[k]=1;gainExp(15);addCredit
 function killEnemy(e){if(e.dead)return;e.dead=true;G.kills++;G.stageKills=(G.stageKills||0)+1;G.combo++;G.comboT=3;DB.kills[e.type]=(DB.kills[e.type]||0)+1;DB.killsTotal=(DB.killsTotal||0)+1;if(e.elite)DB.eliteKills=(DB.eliteKills||0)+1;spawnWreck(e);
  if(DB.kills[e.type]===1){DB.diamond+=1;gainExp(30);toast('♦ +1 DIAMOND ('+BESTIARY[e.type]+')');save();}
  if(G.kills>=1)unlockAch('first');if(G.kills>=100)unlockAch('c100');if(G.kills>=1000)unlockAch('c1000');
- const cr=creditGain(e.credit);addCredit(cr);G.score+=Math.round(e.score*mult());gainExp(2);
+ const cr=creditGain(e.credit);addCredit(cr);G.score+=Math.round(e.score*mult());const expReward=pilotExpForEnemy(e);gainExp(expReward);if(e.elite||e.clusterV||COLOSSAL_TYPES.has(e.type))addText(e.x,e.y-10,'+'+fmt(expReward)+' EXP','#7fd4ff',10);
  explode(e.x,e.y,e.mirror?'#ff7ae0':G.dim.pal.acc,e.size/16);addText(e.x,e.y,'+'+fmt(cr),'#ffc14d');
  if(player.harvest){player.harvestN++;if(player.harvestN>=25){player.harvestN=0;player.bombs=Math.min(5,player.bombs+1);}}
  if(e.mod==='splitter'&&!e.mirror&&!e.clusterV)for(let i=0;i<2;i++){const m=makeEnemy(e.type,e.x+rnd(-14,14),e.y+rnd(-10,10));if(m)G.enemies.push(m);}
@@ -1312,7 +1377,7 @@ function updateFX(dt){for(let i=G.parts.length-1;i>=0;i--){const p=G.parts[i];p.
  for(let i=G.texts.length-1;i>=0;i--){const t=G.texts[i];t.life-=dt;t.y+=t.vy*dt;if(t.life<=0)G.texts.splice(i,1);}}
 function updateBoss(b,dt,s){b.t+=dt;b.hitT=Math.max(0,b.hitT-dt);b.wpa+=dt*1.2;
  if(b.dying>0){b.dying-=dt;if(Math.random()<dt*14)explode(b.x+rnd(-b.size,b.size),b.y+rnd(-b.size,b.size),G.dim.pal.acc,rnd(.5,1.2));
-  if(b.dying<=0){if(!G.stageBombUsed){DB.nobombBoss=(DB.nobombBoss||0)+1;}const cr=creditGain(Math.round(400*(b.lord?4:1)*(b.final?10:1)));addCredit(cr);unlockAch('boss1');if(b.lord){unlockAch('lord1');DB.diamond+=5;dropPick(b.x,b.y,'bp',1);}if(b.final)unlockAch('absolute');gainExp(60);
+  if(b.dying<=0){if(!G.stageBombUsed){DB.nobombBoss=(DB.nobombBoss||0)+1;}const cr=creditGain(Math.round(400*(b.lord?4:1)*(b.final?10:1)));addCredit(cr);unlockAch('boss1');if(b.lord){unlockAch('lord1');DB.diamond+=5;dropPick(b.x,b.y,'bp',1);}if(b.final)unlockAch('absolute');gainExp(pilotBossExpReward(b));
    for(let i=0;i<4;i++)dropPick(b.x+rnd(-40,40),b.y+rnd(-20,20),pick(['heal','power','bomb','ammo']),1);explode(b.x,b.y,'#fff',3);SFX.play('big');G.boss=null;stageClear();}return;}
  const cx=W/2,ty=b.ty;
  if(b.mv==='orbit'){const R=W*.28;b.x=cx+Math.cos(b.t*.5)*R;b.y=ty+Math.sin(b.t*.5)*R*.35;}
@@ -1423,12 +1488,12 @@ const E={};['hp-fill','ammo-fill','heat-wrap','heat-fill','scrap-wrap','scrap-nu
 let toastTO=null;function toast(m,c=''){const t=$('toast');t.textContent=m;t.className=c;t.style.display='block';clearTimeout(toastTO);toastTO=setTimeout(()=>t.style.display='none',2200);}
 function setBanner(t,s2,d=2,dg=false){const b=$('banner');$('banner-title').textContent=t;$('banner-sub').textContent=s2;b.classList.remove('show');b.classList.toggle('danger',dg);void b.offsetWidth;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),d*1000);}
 function updateHUDStatic(){$('hud-stage').textContent='SEKTOR '+G.stage;$('hud-dim').textContent=G.dim.name;$('hud-mech').textContent='◈ '+G.dim.mechName;$('heat-wrap').style.display=mechOn('heat')||G.dim.mech==='chaos'?'block':'none';$('scrap-wrap').style.display=mechOn('scrap')?'block':'none';E.hudCls.textContent=CLSLBL[player.cls];}
-function updateHUD(){E.hpFill.style.width=clamp(player.hp/player.maxHp*100,0,100)+'%';E.hpFill.classList.toggle('low',player.hp/player.maxHp<.3);E.ammoFill.style.width=clamp(player.ammo/player.maxAmmo*100,0,100)+'%';E.heatFill.style.width=clamp(player.heat,0,100)+'%';E.scrapNum.textContent=G.scrap;E.shieldPips.textContent='◆'.repeat(player.scrapShield);E.hudCred.textContent=fmt(DB.credits);E.hudScore.textContent=fmt(G.score);
+function updateHUD(){updatePilotProgressUI();E.hpFill.style.width=clamp(player.hp/player.maxHp*100,0,100)+'%';E.hpFill.classList.toggle('low',player.hp/player.maxHp<.3);E.ammoFill.style.width=clamp(player.ammo/player.maxAmmo*100,0,100)+'%';E.heatFill.style.width=clamp(player.heat,0,100)+'%';E.scrapNum.textContent=G.scrap;E.shieldPips.textContent='◆'.repeat(player.scrapShield);E.hudCred.textContent=fmt(DB.credits);E.hudScore.textContent=fmt(G.score);
  const cEl=$('combo');if(G.combo>=2){cEl.style.display='block';E.comboNum.textContent=G.combo;cEl.style.color=G.combo>30?'#ff3d5c':G.combo>15?'#ffc14d':'#6dffb8';}else cEl.style.display='none';
  $('bomb-num').textContent=player.bombs;$('hud-bomb').textContent='BOM: '+player.bombs;
  const sk=[];if(player.warp&&player.warpCd<=0&&!G.controlsLocked)sk.push('Q:WARP');if(player.dash&&player.dashCd<=0&&!G.controlsLocked)sk.push('SHIFT:DASH');if(player.focusCd<=0&&!G.controlsLocked)sk.push('F:FOCUS');E.hudSkill.style.display=sk.length?'inline-block':'none';E.hudSkill.textContent=sk.join(' ');
  if(G.boss){E.bossWrap.style.display='block';E.bossName.textContent=G.boss.name;E.bossFill.style.width=clamp(G.boss.hp/G.boss.maxHp*100,0,100)+'%';}else E.bossWrap.style.display='none';}
-function refreshChips(){$('menu-cred').textContent=fmt(DB.credits);$('menu-dia').textContent=DB.diamond||0;$('menu-lvl').textContent=DB.lvl||1;}
+function refreshChips(){$('menu-cred').textContent=fmt(DB.credits);$('menu-dia').textContent=DB.diamond||0;$('menu-lvl').textContent=DB.lvl||1;updatePilotProgressUI();}
 function showScr(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.body.dataset.mode=(n==='none')?'play':n;if(n!=='none')$('scr-'+n).classList.add('active');$('hud').style.display=(n==='none')?'block':'none';guideOpen=(n==='guide');
  if(n==='menu'){refreshChips();updateDock();}if(n==='hangar'){$('hangar-cred').textContent=fmt(DB.credits);$('hangar-dia').textContent=DB.diamond||0;buildHangar();}if(n==='map')$('map-best').textContent=DB.maxStage;if(n==='guide')buildGuide();}
 function togglePause(){if(G.mode==='play'){G.mode='pause';$('ov-pause').classList.add('active');}else if(G.mode==='pause'){G.mode='play';$('ov-pause').classList.remove('active');}}
@@ -1550,7 +1615,7 @@ const NOVA_API=(function(){const ev={};
  const _load=loadShip;loadShip=function(f){_load(f);api.emit('shipLoaded',{full:!!f});};
  return api;})();
 window.NOVA=NOVA_API; // Temporary bootstrap bridge for bundled modules only.
-resize();updateDock();refreshChips();showScr('menu');
+gainExp(0,{quiet:true,processExisting:true});resize();updateDock();refreshChips();showScr('menu');
 let last=performance.now();
 function frame(ts){const dt=clamp((ts-last)/1000,0,.033);last=ts;update(dt);render(dt);const t=ts/1000;
  if(G.mode==='menu'&&!guideOpen){drawShipShowcase(dockCtx,240,190,shipById(DB.sel).id,t,shipById(DB.sel).rar);}
