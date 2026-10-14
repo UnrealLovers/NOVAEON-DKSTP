@@ -98,6 +98,39 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
 .ov-btns{display:flex;flex-direction:column;gap:10px;margin-top:20px}
 #rank-badge{font-family:var(--orbit);font-size:64px;font-weight:900;line-height:1;margin:6px 0;text-shadow:0 0 30px currentColor}
 
+/* FIRST-FLIGHT PILOT BRIEFING — compact onboarding that preserves the NOVAEON HUD */
+#ov-pilot-tutorial{z-index:48;padding:18px}
+.pilot-briefing{width:min(650px,94vw);max-height:min(90vh,780px);padding:clamp(18px,3.2vw,30px);text-align:left;border-color:rgba(65,224,255,.45);background:radial-gradient(ellipse at 85% 0%,rgba(65,224,255,.10),transparent 42%),linear-gradient(155deg,rgba(9,18,34,.98),rgba(3,7,16,.98));box-shadow:0 0 70px rgba(0,0,0,.5),0 0 35px rgba(65,224,255,.10);position:relative}
+.pilot-brief-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.pilot-brief-kicker{font:700 10px var(--orbit);letter-spacing:2px;color:var(--cy)}
+.pilot-brief-close{width:34px;height:34px;border:1px solid var(--line);background:#091321;color:var(--mut);font-size:22px;line-height:1;cursor:pointer}
+.pilot-brief-close:hover{border-color:var(--mg);color:#fff}
+.pilot-brief-progress{display:flex;gap:6px;margin:0 0 22px}
+.pilot-brief-progress i{display:block;height:3px;flex:1;background:#172338;transition:background .2s,box-shadow .2s}
+.pilot-brief-progress i.on{background:var(--cy);box-shadow:0 0 10px rgba(65,224,255,.55)}
+.pilot-brief-head{display:grid;grid-template-columns:66px minmax(0,1fr);gap:16px;align-items:center;margin-bottom:16px}
+.pilot-brief-icon{width:66px;height:66px;display:grid;place-items:center;background:linear-gradient(145deg,#102a40,#08111f);border:1px solid rgba(65,224,255,.34);color:var(--cy);font-size:30px;box-shadow:inset 0 0 20px rgba(65,224,255,.07)}
+.pilot-brief-step{font:700 9px var(--orbit);letter-spacing:2px;color:var(--am);margin-bottom:5px}
+.pilot-brief-title{font:900 clamp(20px,3.2vw,28px) var(--orbit);letter-spacing:1px;line-height:1.2;color:var(--ink)}
+.pilot-brief-desc{font-size:15px;line-height:1.65;color:#b7c9dd;margin:0 0 18px;max-width:570px}
+.pilot-brief-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.pilot-brief-item{display:flex;align-items:center;gap:11px;min-height:58px;padding:10px 12px;background:rgba(8,17,31,.78);border:1px solid rgba(30,58,95,.9)}
+.pilot-brief-item kbd{display:inline-flex;align-items:center;justify-content:center;min-width:52px;min-height:30px;padding:4px 7px;border:1px solid rgba(65,224,255,.35);background:#0d1e31;color:var(--cy);font:700 10px var(--orbit);white-space:nowrap}
+.pilot-brief-item span{font-size:12px;line-height:1.35;color:#d4e2f2}
+.pilot-brief-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;padding-top:16px;border-top:1px solid rgba(30,58,95,.8)}
+.pilot-brief-actions{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.pilot-brief-actions .btn{padding:10px 16px;font-size:10px;letter-spacing:1.5px}
+.pilot-brief-skip{padding:9px 4px;background:transparent;border:0;color:var(--mut);font:700 10px var(--orbit);letter-spacing:1px;cursor:pointer}
+.pilot-brief-skip:hover{color:var(--ink)}
+.pilot-brief-note{font-size:10px;line-height:1.45;color:#7186a1;margin-top:12px}
+#pilot-hint{position:fixed;z-index:27;left:50%;bottom:22px;transform:translateX(-50%) translateY(12px);width:min(600px,calc(100vw - 32px));display:none;align-items:center;gap:12px;padding:12px 15px;background:linear-gradient(100deg,rgba(6,20,34,.97),rgba(5,10,22,.97));border:1px solid rgba(65,224,255,.45);box-shadow:0 0 24px rgba(0,0,0,.35),0 0 18px rgba(65,224,255,.10);opacity:0;transition:opacity .22s,transform .22s;pointer-events:auto}
+#pilot-hint.show{display:flex;opacity:1;transform:translateX(-50%) translateY(0)}
+.pilot-hint-mark{flex:0 0 30px;height:30px;display:grid;place-items:center;color:var(--am);border:1px solid rgba(255,193,77,.38);font-size:15px}
+.pilot-hint-copy{flex:1;min-width:0}.pilot-hint-title{font:700 9px var(--orbit);letter-spacing:1.5px;color:var(--cy);margin-bottom:3px}.pilot-hint-text{font-size:12px;line-height:1.45;color:#d9e7f5}
+#pilot-hint-close{align-self:stretch;width:25px;background:transparent;border:0;color:var(--mut);font-size:18px;cursor:pointer}
+@media(max-width:600px){#ov-pilot-tutorial{padding:10px}.pilot-briefing{padding:17px}.pilot-brief-head{grid-template-columns:48px minmax(0,1fr);gap:12px}.pilot-brief-icon{width:48px;height:48px;font-size:23px}.pilot-brief-title{font-size:18px}.pilot-brief-desc{font-size:13px}.pilot-brief-grid{gap:6px}.pilot-brief-item{padding:8px;gap:7px;min-height:56px}.pilot-brief-item kbd{min-width:42px;font-size:8px}.pilot-brief-item span{font-size:10px}.pilot-brief-kicker{font-size:8px;letter-spacing:1px}.pilot-brief-actions{width:100%;margin:0}.pilot-brief-actions .btn{flex:1;justify-content:center}.pilot-brief-foot{gap:8px}#pilot-hint{bottom:12px;padding:10px 11px;gap:8px}.pilot-hint-text{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.pilot-brief-progress i,#pilot-hint{transition:none}}
+
 /* PILOT RANK / EXP progression display */
 .pilot-progress{display:grid;grid-template-columns:minmax(130px,220px) minmax(90px,1fr) minmax(155px,240px);align-items:center;gap:12px;padding:9px 13px;margin:-8px 0 20px;border-color:rgba(65,224,255,.24);background:linear-gradient(90deg,rgba(9,18,34,.88),rgba(8,15,28,.56))}
 .pilot-rank-name{font:900 11px var(--orbit);letter-spacing:1.5px;color:var(--am);white-space:nowrap;text-shadow:0 0 10px rgba(255,193,77,.22)}
@@ -139,12 +172,12 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
  .ship-dock{padding:12px}
 }
 </style>
-<!-- NOVAEON Space Shooter 1.0.8 — single-file desktop build; pilot ranks, sector-scaled EXP, level cap 100. -->
+<!-- NOVAEON Space Shooter Desktop 1.0.9 — first-flight tutorial, contextual hints, pilot ranks, sector-scaled EXP, level cap 100. -->
 </head>
 <body data-mode="menu">
 <canvas id="cv"></canvas><div id="fx-scan"></div><div id="fx-vig"></div>
 <section id="scr-menu" class="screen active">
- <div class="menu-top"><span class="ver">NOVAEON // SPACE SHOOTER 1.0.8 · FLUID ENEMY AI</span>
+ <div class="menu-top"><span class="ver">NOVAEON // SPACE SHOOTER 1.0.9 · PILOT BRIEFING</span>
   <span style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip">◈ <b id="menu-cred">0</b></span><span class="chip" style="color:var(--dia)">♦ <b id="menu-dia">0</b></span><span class="chip" style="color:var(--gr)">Lv <b id="menu-lvl">1</b></span></span></div>
  <div class="pilot-progress panel" aria-label="Progress level dan pangkat pilot">
   <span class="pilot-rank-name" id="menu-rank-title">ROOKIE</span>
@@ -195,6 +228,18 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
  <div class="hud-bl"><span class="chip" id="hud-bomb" style="color:var(--mg)">BOM: 2</span><span class="chip" id="hud-cls" style="color:var(--cy)">WAR</span><span class="chip" id="hud-pilot-rank">LV 1 · ROOKIE</span><span class="chip" id="hud-pilot-exp">EXP 0 / 100</span><span class="chip" id="hud-skill" style="display:none;color:var(--gr)"></span></div>
  <div class="hud-br"><button id="bomb-btn">BOM<b id="bomb-num">2</b></button><button id="pause-btn">II</button></div>
 </div>
+<div class="overlay" id="ov-pilot-tutorial" role="dialog" aria-modal="true" aria-labelledby="pilot-brief-title">
+ <div class="ov-box panel pilot-briefing">
+  <div class="pilot-brief-top"><span class="pilot-brief-kicker">NOVAEON FLIGHT SYSTEM // PILOT ACADEMY</span><button id="pilot-brief-close" class="pilot-brief-close" aria-label="Lewati panduan">×</button></div>
+  <div class="pilot-brief-progress" id="pilot-brief-progress" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+  <div class="pilot-brief-head"><div class="pilot-brief-icon" id="pilot-brief-icon">⌖</div><div><div class="pilot-brief-step" id="pilot-brief-step">BRIEFING 01 / 04</div><h2 class="pilot-brief-title" id="pilot-brief-title">MOVEMENT &amp; FLIGHT</h2></div></div>
+  <p class="pilot-brief-desc" id="pilot-brief-desc">Pelajari cara menerbangkan pesawat sebelum memasuki sektor pertama.</p>
+  <div class="pilot-brief-grid" id="pilot-brief-grid"></div>
+  <div class="pilot-brief-foot"><button id="pilot-brief-skip" class="pilot-brief-skip">LEWATI PANDUAN</button><div class="pilot-brief-actions"><button id="pilot-brief-prev" class="btn" disabled>◀ KEMBALI</button><button id="pilot-brief-next" class="btn primary">LANJUTKAN ▸</button></div></div>
+  <div class="pilot-brief-note" id="pilot-brief-note">Panduan hanya muncul saat pertama bermain. Kamu bisa membukanya kembali melalui GUIDE &amp; DATABASE.</div>
+ </div>
+</div>
+<div id="pilot-hint" role="status" aria-live="polite"><div class="pilot-hint-mark">✦</div><div class="pilot-hint-copy"><div class="pilot-hint-title" id="pilot-hint-title">FLIGHT TIP</div><div class="pilot-hint-text" id="pilot-hint-text"></div></div><button id="pilot-hint-close" aria-label="Tutup tips">×</button></div>
 <div id="toast"></div><div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
 <div class="overlay" id="ov-pause"><div class="ov-box panel"><h2 style="color:var(--cy)">JEDA</h2><div class="ov-btns"><button class="btn primary" id="btn-resume">LANJUTKAN</button><button class="btn" id="btn-pset">⚙ SETTINGS</button><button class="btn" id="btn-restart">ULANG</button><button class="btn danger" id="btn-quit">KELUAR</button></div></div></div>
 <div class="overlay" id="ov-over"><div class="ov-box panel"><h2 id="over-title" style="color:var(--red)">KAPAL HANCUR</h2><div id="rank-badge">C</div><p class="sub" id="over-sub"></p>
@@ -202,7 +247,7 @@ h2.page-title{font-family:var(--orbit);font-size:clamp(22px,3.4vw,36px);font-wei
  <div class="ov-btns"><button class="btn primary" id="btn-retry">COBA LAGI</button><button class="btn" id="btn-menu2">KE MARKAS</button></div></div></div>
 <div class="overlay" id="ov-set"><div class="ov-box panel"><h2 style="color:var(--cy)">USER SETTINGS</h2><div id="set-list" style="text-align:left"></div><div class="ov-btns"><button class="btn danger" id="btn-reset">RESET DATA</button><button class="btn primary" id="btn-setclose">TUTUP</button></div></div></div>
 <div class="overlay" id="modal"><div class="ov-box panel"><h2 id="modal-title" style="color:var(--cy);font-size:22px"></h2><p class="sub" id="modal-body" style="line-height:1.7"></p><div class="ov-btns"><button class="btn primary" id="modal-ok">PILIH</button><button class="btn" id="modal-cancel">BATAL</button></div></div></div>
-<!-- NOVAEON Space Shooter Desktop 1.0.8 — single-file build. Main engine and included extensions are embedded below. -->
+<!-- NOVAEON Space Shooter Desktop 1.0.9 — Pilot Briefing & First-Flight Hints. Single-file build. -->
 <script>
 'use strict';(()=>{
 const $=id=>document.getElementById(id);const TAU=Math.PI*2;
@@ -216,9 +261,9 @@ const KEY='novaeon_ars_v7',OLDKEYS=['novaeon_ars_v6','novaeon_ars_v5','novaeon_a
 const ALL_SAVE_KEYS=[...new Set([KEY,...OLDKEYS])];
 const readSaveKey=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
 function removeAllSaveData(){for(const k of ALL_SAVE_KEYS){try{localStorage.removeItem(k);}catch(e){}}location.reload();}
-let DB={credits:0,diamond:0,exp:0,lvl:1,owned:['sparrow'],sel:'sparrow',maxStage:1,best:0,sound:true,bp:0,prestige:0,ach:{},achAll:{},kills:{},seen:{},killsTotal:0,eliteKills:0,creditsTotal:0,maxCombo:0,perfectStages:0,rankS:0,nobombBoss:0,focusUses:0,discoveryDone:false,modcls:'war',set:{shake:1,part:1,dmg:1,flash:1},up:{fire:0,cad:0,hull:0,thr:0,mag:0,magz:0},garage:null};
+let DB={credits:0,diamond:0,exp:0,lvl:1,owned:['sparrow'],sel:'sparrow',maxStage:1,best:0,sound:true,bp:0,prestige:0,ach:{},achAll:{},kills:{},seen:{},killsTotal:0,eliteKills:0,creditsTotal:0,maxCombo:0,perfectStages:0,rankS:0,nobombBoss:0,focusUses:0,discoveryDone:false,tutorialSeen:false,tutorialHintSeen:false,modcls:'war',set:{shake:1,part:1,dmg:1,flash:1},up:{fire:0,cad:0,hull:0,thr:0,mag:0,magz:0},garage:null};
 (function(){let raw=readSaveKey(KEY);if(!raw)for(const k of OLDKEYS){const s=readSaveKey(k);if(s){raw=s;break;}}
- if(raw){try{const s=JSON.parse(raw);DB=Object.assign(DB,s);DB.up=Object.assign({fire:0,cad:0,hull:0,thr:0,mag:0,magz:0},s.up);DB.set=Object.assign({shake:1,part:1,dmg:1,flash:1},s.set);DB.ach=s.ach||{};DB.achAll=s.achAll||{};DB.kills=s.kills||{};DB.seen=s.seen||{};DB.garage=s.garage||null;}catch(e){}}})();
+ if(raw){try{const s=JSON.parse(raw);const hadTutorialFlag=Object.prototype.hasOwnProperty.call(s,'tutorialSeen');const hadHintFlag=Object.prototype.hasOwnProperty.call(s,'tutorialHintSeen');DB=Object.assign(DB,s);if(!hadTutorialFlag){DB.tutorialSeen=true;DB.tutorialHintSeen=true;}else if(!hadHintFlag){DB.tutorialHintSeen=!!DB.tutorialSeen;}DB.up=Object.assign({fire:0,cad:0,hull:0,thr:0,mag:0,magz:0},s.up);DB.set=Object.assign({shake:1,part:1,dmg:1,flash:1},s.set);DB.ach=s.ach||{};DB.achAll=s.achAll||{};DB.kills=s.kills||{};DB.seen=s.seen||{};DB.garage=s.garage||null;}catch(e){}}})();
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}};
 const PM=()=>DB.set?DB.set.part:1;
 const SFX={c:null,g:null,last:{},init(){if(this.c)return;try{const A=window.AudioContext||window.webkitAudioContext;this.c=new A();this.g=this.c.createGain();this.g.gain.value=.4;this.g.connect(this.c.destination);}catch(e){}},
@@ -1668,7 +1713,7 @@ function refreshChips(){$('menu-cred').textContent=fmt(DB.credits);$('menu-dia')
 function showScr(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.body.dataset.mode=(n==='none')?'play':n;if(n!=='none')$('scr-'+n).classList.add('active');$('hud').style.display=(n==='none')?'block':'none';guideOpen=(n==='guide');
  if(n==='menu'){refreshChips();updateDock();}if(n==='hangar'){$('hangar-cred').textContent=fmt(DB.credits);$('hangar-dia').textContent=DB.diamond||0;buildHangar();}if(n==='map')$('map-best').textContent=DB.maxStage;if(n==='guide')buildGuide();}
 function togglePause(){if(G.mode==='play'){G.mode='pause';$('ov-pause').classList.add('active');}else if(G.mode==='pause'){G.mode='play';$('ov-pause').classList.remove('active');}}
-function startRun(st){G.portalTransition=null;G.controlsLocked=false;document.body.dataset.mode='play';$('ov-over').classList.remove('active');$('ov-pause').classList.remove('active');G.stage=clamp(st,1,2000);G.score=0;G.kills=0;G.runCred=0;G.scrap=0;G.event=null;G.meteorRain=0;resetFX();loadShip(true);showScr('none');G.mode='play';startStage(true);setBanner('EKSPEDISI','SEKTOR '+G.stage,2.2);SFX.play('ui');}
+function startRun(st){if(!DB.tutorialSeen){openPilotBriefing(st,'first');return;}const firstTip=!DB.tutorialHintSeen;G.portalTransition=null;G.controlsLocked=false;document.body.dataset.mode='play';$('ov-over').classList.remove('active');$('ov-pause').classList.remove('active');G.stage=clamp(st,1,2000);G.score=0;G.kills=0;G.runCred=0;G.scrap=0;G.event=null;G.meteorRain=0;resetFX();loadShip(true);showScr('none');G.mode='play';startStage(true);setBanner('EKSPEDISI','SEKTOR '+G.stage,2.2);SFX.play('ui');if(firstTip){DB.tutorialHintSeen=true;save();setTimeout(()=>{if(G.mode==='play')showPilotHint('FIRST COMBAT TIP','Tembakan utama otomatis. Sejajarkan kapal dengan musuh dan terus bergerak untuk menghindari peluru.',7000);},2600);}}
 function rankOf(){const sc=G.score,st=Math.max(1,G.stage);const r=sc/(st*1200);const rank=r>3?'S':r>2?'A':r>1?'B':'C';if(rank==='S')DB.rankS=(DB.rankS||0)+1;return rank;}
 function showOver(v){G.mode='over';$('ov-stage').textContent=G.stage;$('ov-kills').textContent=G.kills;$('ov-cred').textContent=fmt(G.runCred);$('ov-score').textContent=fmt(G.score);
  const rk=rankOf();const rb=$('rank-badge');rb.textContent=rk;rb.style.color=rk==='S'?'#ffd700':rk==='A'?'#7cffb0':rk==='B'?'#41e0ff':'#9aa7b8';
@@ -1723,14 +1768,14 @@ function buildGuide(){guideBuilt=true;guideShipPrevs.length=0;const sg=$('guide-
    const fb=(Tt.flags&&FLAGLBL[Tt.flags])?`<span class="bdg warn">${FLAGLBL[Tt.flags]}</span>`:'';
    c.innerHTML=`<canvas width="110" height="90"></canvas><h4>${BESTIARY[k]}</h4><div class="sub">${kills>0?'Dikalahkan':'Terlihat'}</div><div><span class="bdg">${MOVLBL[Tt.move]}</span><span class="bdg">${FMLBL[Tt.fm]}</span>${fb}</div><div class="erow"><span>HP ${Tt.hp}</span><span>×${kills}</span></div>`;
    mg.appendChild(c);drawEnemyPreview(c.querySelector('canvas').getContext('2d'),k);});});
- $('guide-sys').innerHTML=`<div class="sysbox panel"><h3>🎮 KONTROL</h3><ul><li>WASD/Panah/sentuh · Tembak otomatis · Bom B · Jeda P/Esc.</li><li>SCOUT: Shift=Dash, Q=Warp. SEMUA: F=FOCUS.</li><li>Achievement: Ctrl+A.</li></ul></div>
+ $('guide-sys').innerHTML=`<div class="sysbox panel"><h3>✦ PILOT BRIEFING</h3><p style="font-size:13px;color:#b9cbe2;line-height:1.6;margin-bottom:12px">Buka kembali panduan gerakan, auto fire, kemampuan khusus, dan progres ekspedisi.</p><button class="btn primary" id="btn-replay-pilot-briefing">ULANGI PILOT BRIEFING</button></div><div class="sysbox panel"><h3>🎮 KONTROL</h3><ul><li>WASD/Panah/sentuh · Tembak otomatis · Bom B · Jeda P/Esc.</li><li>SCOUT: Shift=Dash, Q=Warp. SEMUA: F=FOCUS.</li><li>Achievement: Ctrl+A.</li></ul></div>
  <div class="sysbox panel"><h3>🛸 5 KLUSTER · 20 DIMENSI</h3><ul><li>Kluster V dimulai pada sektor 1501 dan terdiri dari ancaman kelas kolosal. Jumlah musuh per gelombang dibatasi agar tiap ancaman terbaca, bukan menjadi kawanan mini.</li><li>Gerbang sektor 1500 bukan akhir ekspedisi; puncak akhir berada di sektor 2000.</li></ul></div>
  <div class="sysbox panel"><h3>🚀 13 TIER PESAWAT</h3><ul><li>T1 Common → T13 Omnipotent. Makin tinggi = makin premium: energy-wings, halo, orbit-shard, inti putih, mahkota, reality-crack.</li></ul></div>
  <div class="sysbox panel"><h3>🔫 10 JENIS SENJATA</h3><ul><li>GATLING · SHARD · LANCE · PLASMA · WAVE · RAILGUN · MISSILE · HOLY · CORRUPT · SINGULARITY.</li></ul></div>
  <div class="sysbox panel"><h3>🔧 SPACE GARAGE</h3><ul><li>Rakit part, upgrade Rank E→SSS, ganti senjata, beli Mini-F companion.</li><li>Material dari grinding sektor (ber-syarat dimensi).</li></ul></div>
  <div class="sysbox panel"><h3>👹 ARMADA MUSUH & FASE AKHIR</h3><ul><li>20 dimensi, musuh dengan siluet unik, armor berlapis, core reaktif, dan shield yang terbaca.</li><li>Kluster V (sektor 1501–2000) hanya berisi ancaman kolosal: Semi-Boss, Boss-, Giant Boss, Space Dragon, Semi-Lord, Lord, dan God. Tidak ada gelombang musuh mini atau pecahan mini.</li><li>Gerbang Entitas Absolut di sektor 1500; final Godhead berada di sektor 2000.</li></ul></div>
  <div class="sysbox panel"><h3>🌀 MEKANIK DIMENSI</h3>${DIMS.map((d,i)=>`<div class="kv"><span>D${i+1}</span><b>${d.mechName}</b></div>`).join('')}</div>
- <div class="sysbox panel"><h3>💡 TIPS</h3><ul><li>FOCUS saat bullet-hell · Omnipotent menarik peluru musuh · Simpan bom untuk boss.</li></ul></div>`;}
+ <div class="sysbox panel"><h3>💡 TIPS</h3><ul><li>FOCUS saat bullet-hell · Omnipotent menarik peluru musuh · Simpan bom untuk boss.</li></ul></div>`;const replay=$('btn-replay-pilot-briefing');if(replay)replay.addEventListener('click',()=>{SFX.play('ui');openPilotBriefing(DB.maxStage||1,'review');});}
 function buildSettings(){const L=$('set-list'),S=DB.set;
  L.innerHTML=`<div class="setrow"><b>SFX</b><button class="tgl ${DB.sound?'on':''}" data-k="sound" data-v="${DB.sound?1:0}">${DB.sound?'ON':'OFF'}</button></div>
  <div class="setrow"><b>SCREEN SHAKE</b><button class="tgl ${S.shake?'on':''}" data-k="shake" data-v="${S.shake?1:0}">${S.shake?'ON':'OFF'}</button></div>
@@ -1739,6 +1784,45 @@ function buildSettings(){const L=$('set-list'),S=DB.set;
  <div class="setrow"><b>PARTIKEL</b><span>${['LOW','MED','HIGH'].map((o,i)=>`<button class="tgl ${S.part===i?'on':''}" data-k="part" data-v="${i}">${o}</button>`).join('')}</span></div>
  <div class="setrow"><b>STAT</b><span class="sub">Lv${DB.lvl} ♦${DB.diamond||0} P${DB.prestige||0} Codex ${Object.keys(DB.seen).length}/${Object.keys(ETYPES).length}</span></div>`;
  L.querySelectorAll('.tgl').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k,v=+b.dataset.v;if(k==='sound')DB.sound=v===1;else DB.set[k]=v;save();buildSettings();SFX.play('ui');}));}
+/* FIRST-RUN PILOT BRIEFING + NON-BLOCKING FIRST-COMBAT HINTS */
+const PILOT_BRIEFINGS=[
+ {icon:'⌖',step:'FLIGHT BASICS',title:'MOVEMENT & FLIGHT',desc:'Kamu mengendalikan kapal, bukan crosshair. Bergeraklah untuk menyelaraskan tembakan sekaligus menghindari proyektil lawan.',items:[['W A S D','Gerak atas, kiri, bawah, kanan'],['ARROW KEYS','Alternatif untuk bergerak'],['MOUSE','Arahkan kapal dengan gerakan pointer'],['FLIGHT','Pakai satu metode kontrol pada satu waktu']]},
+ {icon:'✦',step:'WEAPON SYSTEM',title:'AUTO FIRE & COMBAT',desc:'Senjata utama menembak otomatis. Posisikan kapal segaris dengan musuh, lalu terus bergerak ketika pola peluru mulai padat.',items:[['AUTO FIRE','Tembakan utama berjalan otomatis'],['B','Gunakan Bomb saat terdesak'],['AIM LINE','Geser posisi agar tembakan mengenai target'],['DODGE','Jangan diam di jalur peluru']]},
+ {icon:'ϟ',step:'TACTICAL ABILITIES',title:'SPECIAL ACTIONS',desc:'Kemampuan memberi ruang untuk menghindar, tetapi cooldown dan kelas kapal tetap berlaku. Periksa HUD untuk melihat kemampuan yang tersedia.',items:[['F','Focus: perlambat waktu sementara'],['SHIFT','Dash pada kapal yang mendukung'],['Q','Warp pada kapal yang mendukung'],['P / ESC','Jeda permainan kapan saja']]},
+ {icon:'◇',step:'EXPEDITION PROTOCOL',title:'UPGRADE & DIMENSIONS',desc:'Kredit, EXP, dan material membantu memperkuat armada. Setiap dimensi memiliki mekanik berbeda, jadi jangan gunakan satu strategi untuk semua sektor.',items:[['HANGAR & LAB','Beli kapal dan tingkatkan statistik'],['PILOT RANK','Level menaikkan damage; level maksimum 100'],['DIMENSION GATE','Kalahkan boss gerbang untuk lanjut'],['PORTAL','Masuki portal untuk berpindah dimensi']]}
+];
+let pilotBriefStep=0,pilotBriefStage=1,pilotBriefMode='first',pilotHintTimer=0,pilotHintHideTimer=0;
+function renderPilotBriefing(){
+ const d=PILOT_BRIEFINGS[pilotBriefStep];if(!d)return;
+ $('pilot-brief-icon').textContent=d.icon;$('pilot-brief-step').textContent=d.step+' · '+String(pilotBriefStep+1).padStart(2,'0')+' / '+String(PILOT_BRIEFINGS.length).padStart(2,'0');
+ $('pilot-brief-title').textContent=d.title;$('pilot-brief-desc').textContent=d.desc;
+ $('pilot-brief-grid').innerHTML=d.items.map(([key,label])=>`<div class="pilot-brief-item"><kbd>${key}</kbd><span>${label}</span></div>`).join('');
+ [...$('pilot-brief-progress').children].forEach((el,i)=>el.classList.toggle('on',i<=pilotBriefStep));
+ $('pilot-brief-prev').disabled=pilotBriefStep===0;$('pilot-brief-next').textContent=pilotBriefStep===PILOT_BRIEFINGS.length-1?(pilotBriefMode==='first'?'MULAI EKSPEDISI ▶':'SELESAI ✓'):'LANJUTKAN ▸';
+ $('pilot-brief-skip').textContent=pilotBriefMode==='first'?'LEWATI PANDUAN':'TUTUP PANDUAN';
+ $('pilot-brief-note').textContent=pilotBriefMode==='first'?'Panduan hanya muncul saat pertama bermain. Kamu bisa membukanya kembali melalui GUIDE & DATABASE.':'Mode pratinjau panduan. Menutupnya tidak akan mengubah progres atau memulai ekspedisi.';
+}
+function openPilotBriefing(stage=DB.maxStage||1,mode='first'){
+ pilotBriefStage=clamp(Math.floor(Number(stage)||1),1,2000);pilotBriefMode=mode;pilotBriefStep=0;renderPilotBriefing();$('ov-pilot-tutorial').classList.add('active');
+}
+function closePilotBriefing(action='skip'){
+ $('ov-pilot-tutorial').classList.remove('active');
+ if(pilotBriefMode==='review')return;
+ DB.tutorialSeen=true;save();
+ if(action==='start'||action==='skip')startRun(pilotBriefStage);
+}
+$('pilot-brief-prev').addEventListener('click',()=>{if(pilotBriefStep>0){pilotBriefStep--;renderPilotBriefing();SFX.play('ui');}});
+$('pilot-brief-next').addEventListener('click',()=>{if(pilotBriefStep<PILOT_BRIEFINGS.length-1){pilotBriefStep++;renderPilotBriefing();SFX.play('ui');return;}closePilotBriefing('start');});
+$('pilot-brief-skip').addEventListener('click',()=>closePilotBriefing('skip'));
+$('pilot-brief-close').addEventListener('click',()=>closePilotBriefing('skip'));
+$('ov-pilot-tutorial').addEventListener('click',e=>{if(e.target===$('ov-pilot-tutorial'))closePilotBriefing('skip');});
+function showPilotHint(title,message,duration=6500){
+ clearTimeout(pilotHintTimer);clearTimeout(pilotHintHideTimer);$('pilot-hint-title').textContent=title;$('pilot-hint-text').textContent=message;
+ const h=$('pilot-hint');h.style.display='flex';requestAnimationFrame(()=>h.classList.add('show'));
+ pilotHintTimer=setTimeout(()=>{h.classList.remove('show');pilotHintHideTimer=setTimeout(()=>{h.style.display='none';},260);},duration);
+}
+$('pilot-hint-close').addEventListener('click',()=>{clearTimeout(pilotHintTimer);$('pilot-hint').classList.remove('show');pilotHintHideTimer=setTimeout(()=>$('pilot-hint').style.display='none',260);});
+
 let modalOk=null;function openModal(t,b,o,cb){$('modal-title').textContent=t;$('modal-body').textContent=b;$('modal-ok').textContent=o;modalOk=cb;$('modal').classList.add('active');}
 function closeModal(){$('modal').classList.remove('active');modalOk=null;}
 $('modal-ok').addEventListener('click',()=>{if(modalOk)modalOk();closeModal();});$('modal-cancel').addEventListener('click',closeModal);
