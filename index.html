@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="theme-color" content="#04070f"/><meta name="application-name" content="NOVAEON Space Shooter"/><meta name="description" content="NOVAEON Space Shooter Desktop 1.0.14 — action-based pilot tutorial, cinematic portals, fluid enemy AI, pilot ranks and sectors 1–2000."/>
-<title>NOVAEON — Space Shooter Desktop 1.0.14</title>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="theme-color" content="#04070f"/><meta name="application-name" content="NOVAEON Space Shooter"/><meta name="description" content="NOVAEON Space Shooter Desktop 1.0.15 — action-based pilot tutorial, cinematic portals, fluid enemy AI, pilot ranks and sectors 1–2000."/>
+<title>NOVAEON — Space Shooter Desktop 1.0.15</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"/>
 <!-- Restore NOVAEON's original type system: Orbitron, Rajdhani, and Share Tech Mono. -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -214,12 +214,12 @@ body[data-mode="portal"] #ach-toast,body[data-mode="portal"] #toast{display:none
 @keyframes statRise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){#ov-over.active .ov-box,#ov-over.active #over-title,#ov-over.active #rank-badge,#ov-over.active .stat-line{animation:none}}
 </style>
-<!-- NOVAEON Space Shooter Desktop 1.0.14 — action-based pilot tutorial, contextual hints, pilot ranks, sector-scaled EXP, level cap 100. -->
+<!-- NOVAEON Space Shooter Desktop 1.0.15 — action-based pilot tutorial, contextual hints, pilot ranks, sector-scaled EXP, level cap 100. -->
 </head>
 <body data-mode="menu">
 <canvas id="cv"></canvas><div id="fx-scan"></div><div id="fx-vig"></div>
 <section id="scr-menu" class="screen active">
- <div class="menu-top"><span class="ver">NOVAEON // SPACE SHOOTER 1.0.14 · FIRST-RUN TUTORIAL</span>
+ <div class="menu-top"><span class="ver">NOVAEON // SPACE SHOOTER 1.0.15 · RANK BALANCE</span>
   <span style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip">◈ <b id="menu-cred">0</b></span><span class="chip" style="color:var(--dia)">♦ <b id="menu-dia">0</b></span><span class="chip" style="color:var(--gr)">Lv <b id="menu-lvl">1</b></span></span></div>
  <div class="pilot-progress panel" aria-label="Progress level dan pangkat pilot">
   <span class="pilot-rank-name" id="menu-rank-title">ROOKIE</span>
@@ -299,7 +299,7 @@ body[data-mode="portal"] #ach-toast,body[data-mode="portal"] #toast{display:none
  <div class="ov-btns"><button class="btn primary" id="btn-retry">COBA LAGI</button><button class="btn" id="btn-menu2">KE MARKAS</button></div></div></div>
 <div class="overlay" id="ov-set"><div class="ov-box panel"><h2 style="color:var(--cy)">USER SETTINGS</h2><div id="set-list" style="text-align:left"></div><div class="ov-btns"><button class="btn" id="btn-settings-tutorial">✦ TUTORIAL</button><button class="btn danger" id="btn-reset">RESET DATA</button><button class="btn primary" id="btn-setclose">TUTUP</button></div></div></div>
 <div class="overlay" id="modal"><div class="ov-box panel"><h2 id="modal-title" style="color:var(--cy);font-size:22px"></h2><p class="sub" id="modal-body" style="line-height:1.7"></p><div class="ov-btns"><button class="btn primary" id="modal-ok">PILIH</button><button class="btn" id="modal-cancel">BATAL</button></div></div></div>
-<!-- NOVAEON Space Shooter Desktop 1.0.14 — Action-based Pilot Tutorial. Single-file build. -->
+<!-- NOVAEON Space Shooter Desktop 1.0.15 — Action-based Pilot Tutorial. Single-file build. -->
 <script>
 'use strict';(()=>{
 const $=id=>document.getElementById(id);const TAU=Math.PI*2;
@@ -2429,7 +2429,7 @@ const RANKS=['E','D','C','B','A','S','SS','SSS'];
 const RANK_MULT={E:1,D:1.08,C:1.16,B:1.25,A:1.35,S:1.5,SS:1.68,SSS:1.9};
 const RANK_REQ={
  D:{stage:0,cr:2000,alloy:10},
- C:{stage:100,cr:8000,alloy:30,crystal:10},
+ C:{stage:100,cr:6000,alloy:20,crystal:5},
  B:{stage:200,cr:25000,alloy:60,crystal:30,plasma:10},
  A:{stage:400,cr:80000,alloy:120,crystal:60,plasma:30,nano:10},
  S:{stage:600,cr:250000,alloy:250,crystal:120,plasma:60,nano:30,void:10,dia:20},
