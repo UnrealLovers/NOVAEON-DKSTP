@@ -3648,8 +3648,42 @@ function toast(m){const t=$('toast');if(!t)return;t.textContent=m;t.style.displa
 function openUI(){uiOpen=true;NOVA.showScreen('garage');refresh();}
 $('gg-back').onclick=()=>{uiOpen=false;NOVA.showScreen('menu');};
 function matsHTML(){const m=dbg().mats;return Object.keys(MATS).map(k=>`<span class="gg-mat" style="--mc:${MATS[k].c}">${MATS[k].ic} <b>${m[k]||0}</b></span>`).join('')+`<span class="gg-mat" style="--mc:var(--am)">◈ <b>${NOVA.DB.credits|0}</b></span><span class="gg-mat" style="--mc:var(--dia)">♦ <b>${NOVA.DB.diamond|0}</b></span>`;}
-function canAfford(cost){const m=dbg().mats;for(const k in cost){if(k==='cr'){if(NOVA.DB.credits<cost[k])return false;}else if(k==='dia'){if(NOVA.DB.diamond<cost[k])return false;}else if((m[k]||0)<cost[k])return false;}return true;}
-function pay(cost){const m=dbg().mats;for(const k in cost){if(k==='cr')NOVA.DB.credits-=cost[k];else if(k==='dia')NOVA.DB.diamond-=cost[k];else m[k]-=cost[k];}NOVA.save();}
+function canAfford(cost) {
+  const m = dbg().mats;
+
+  for (const k in cost) {
+    // Syarat sektor diperiksa terpisah, bukan sebagai material.
+    if (k === 'stage') continue;
+
+    if (k === 'cr') {
+      if (NOVA.DB.credits < cost[k]) return false;
+    } else if (k === 'dia') {
+      if (NOVA.DB.diamond < cost[k]) return false;
+    } else if ((m[k] || 0) < cost[k]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+function pay(cost) {
+  const m = dbg().mats;
+
+  for (const k in cost) {
+    // Jangan mengurangi material untuk syarat sektor.
+    if (k === 'stage') continue;
+
+    if (k === 'cr') {
+      NOVA.DB.credits -= cost[k];
+    } else if (k === 'dia') {
+      NOVA.DB.diamond -= cost[k];
+    } else {
+      m[k] -= cost[k];
+    }
+  }
+
+  NOVA.save();
+}
 function costStr(cost){return Object.keys(cost).map(k=>k==='cr'?'◈'+cost[k]:k==='dia'?'♦'+cost[k]:(MATS[k]?MATS[k].ic:k)+'×'+cost[k]).join(' ');}
 function refresh(){$('gg-mats').innerHTML=matsHTML();
  // ship list
