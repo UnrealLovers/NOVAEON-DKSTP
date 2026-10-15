@@ -3684,7 +3684,18 @@ function pay(cost) {
 
   NOVA.save();
 }
-function costStr(cost){return Object.keys(cost).map(k=>k==='cr'?'◈'+cost[k]:k==='dia'?'♦'+cost[k]:(MATS[k]?MATS[k].ic:k)+'×'+cost[k]).join(' ');}
+function costStr(cost) {
+  return Object.keys(cost)
+    .filter(k => k !== 'stage')
+    .map(k =>
+      k === 'cr'
+        ? '◈' + cost[k]
+        : k === 'dia'
+          ? '♦' + cost[k]
+          : (MATS[k] ? MATS[k].ic : k) + '×' + cost[k]
+    )
+    .join(' ');
+}
 function refresh(){$('gg-mats').innerHTML=matsHTML();
  // ship list
  const sl=$('gg-ships');sl.innerHTML='';NOVA.DB.owned.forEach(id=>{const s=NOVA.SHIPS.find(x=>x.id===id);if(!s)return;
